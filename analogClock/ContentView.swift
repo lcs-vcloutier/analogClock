@@ -26,7 +26,8 @@ struct ContentView_Previews: PreviewProvider {
 
 struct Home: View {
     @Binding var isDark : Bool
-    
+    var width = UIScreen.main.bounds.width
+
     var body: some View {
         VStack {
             // Top Bar & color button
@@ -49,6 +50,15 @@ struct Home: View {
             .padding()
             
             Spacer(minLength: 0)
+            
+            ZStack {
+                Circle()
+                    .fill(Color("Color").opacity(0.1))
+            }
+            .frame(width: width - 80, height: width - 80)
+            
+            Spacer(minLength: 0)
+            
         }
     }
 }
