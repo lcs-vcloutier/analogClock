@@ -140,11 +140,11 @@ struct Home: View {
         }
     }
     func getTime()->String{
-            
-            let format = DateFormatter()
-            format.dateFormat = "h:mm a"
-            
-            return format.string(from: Date())
+        
+        let format = DateFormatter()
+        format.dateFormat = "h:mm a"
+        
+        return format.string(from: Date())
     }
 }
 // Calculating time
