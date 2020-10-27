@@ -29,7 +29,7 @@ struct Home: View {
     var width = UIScreen.main.bounds.width
     @State var current_Time = Time(min: 0, sec: 0, hour: 0)
     @State var receiver = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
-
+    
     var body: some View {
         VStack {
             // Top Bar & color button
@@ -100,12 +100,38 @@ struct Home: View {
             Spacer(minLength: 0)
             
         }
+        .onAppear(perform: {
+                    
+                    let calender = Calendar.current
+                    
+                    let min = calender.component(.minute, from: Date())
+                    let sec = calender.component(.second, from: Date())
+                    let hour = calender.component(.hour, from: Date())
+                    
+                    withAnimation(Animation.linear(duration: 0.01)){
+                        
+                        self.current_Time = Time(min: min, sec: sec, hour: hour)
+                    }
+                })
+        .onReceive(receiver) { (_) in
+            
+            let calender = Calendar.current
+            
+            let min = calender.component(.minute, from: Date())
+            let sec = calender.component(.second, from: Date())
+            let hour = calender.component(.hour, from: Date())
+            
+            withAnimation(Animation.linear(duration: 0.01)){
+                
+                self.current_Time = Time(min: min, sec: sec, hour: hour)
+            }
+        }
     }
 }
-// Calculating time
-
-struct Time {
-    var min : Int
-    var sec : Int
-    var hour : Int
-}
+    // Calculating time
+    
+    struct Time {
+        var min : Int
+        var sec : Int
+        var hour : Int
+    }
