@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isDark = false
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            Home(isDark: $isDark)
+                .navigationBarHidden(true)
+                .preferredColorScheme(isDark ? .dark : .light)
+        }
     }
 }
 
@@ -24,9 +28,9 @@ struct Home: View {
     @Binding var isDark : Bool
     
     var body: some View {
-        VStack{
+        VStack {
             // Top Bar & color button
-            HStack{
+            HStack {
                 Text("Analog Clock")
                     .font(.title)
                     .fontWeight(.heavy)
@@ -42,6 +46,9 @@ struct Home: View {
                         .clipShape(Circle())
                 }
             }
+            .padding()
+            
+            Spacer(minLength: 0)
         }
     }
 }
