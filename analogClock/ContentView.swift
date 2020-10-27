@@ -97,22 +97,34 @@ struct Home: View {
             }
             .frame(width: width - 80, height: width - 80)
             
+            // getting Local Region Name...
+            
+            Text(Locale.current.localizedString(forRegionCode: Locale.current.regionCode!) ?? "")
+                .font(.largeTitle)
+                .fontWeight(.heavy)
+                .padding(.top,35)
+            
+            Text(getTime())
+                .font(.system(size: 45))
+                .fontWeight(.heavy)
+                .padding(.top,10)
+            
             Spacer(minLength: 0)
             
         }
         .onAppear(perform: {
-                    
-                    let calender = Calendar.current
-                    
-                    let min = calender.component(.minute, from: Date())
-                    let sec = calender.component(.second, from: Date())
-                    let hour = calender.component(.hour, from: Date())
-                    
-                    withAnimation(Animation.linear(duration: 0.01)){
-                        
-                        self.current_Time = Time(min: min, sec: sec, hour: hour)
-                    }
-                })
+            
+            let calender = Calendar.current
+            
+            let min = calender.component(.minute, from: Date())
+            let sec = calender.component(.second, from: Date())
+            let hour = calender.component(.hour, from: Date())
+            
+            withAnimation(Animation.linear(duration: 0.01)){
+                
+                self.current_Time = Time(min: min, sec: sec, hour: hour)
+            }
+        })
         .onReceive(receiver) { (_) in
             
             let calender = Calendar.current
@@ -127,11 +139,18 @@ struct Home: View {
             }
         }
     }
-}
-    // Calculating time
-    
-    struct Time {
-        var min : Int
-        var sec : Int
-        var hour : Int
+    func getTime()->String{
+            
+            let format = DateFormatter()
+            format.dateFormat = "h:mm a"
+            
+            return format.string(from: Date())
     }
+}
+// Calculating time
+
+struct Time {
+    var min : Int
+    var sec : Int
+    var hour : Int
+}
