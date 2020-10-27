@@ -27,7 +27,9 @@ struct ContentView_Previews: PreviewProvider {
 struct Home: View {
     @Binding var isDark : Bool
     var width = UIScreen.main.bounds.width
-    
+    @State var current_Time = Time(min: 0, sec: 0, hour: 0)
+    @State var receiver = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
+
     var body: some View {
         VStack {
             // Top Bar & color button
@@ -66,6 +68,32 @@ struct Home: View {
                         .offset(y: (width - 110) / 2)
                         .rotationEffect(.init(degrees: Double(i) * 6))
                 }
+                // Seconds hand
+                
+                Rectangle()
+                    .fill(Color.primary)
+                    .frame(width: 2, height: (width - 180) / 2)
+                    .offset(y: -(width - 180) / 4)
+                    .rotationEffect(.init(degrees: Double(current_Time.sec) * 6))
+                
+                // Minute hand
+                Rectangle()
+                    .fill(Color.primary)
+                    .frame(width: 4, height: (width - 200) / 2)
+                    .offset(y: -(width - 200) / 4)
+                    .rotationEffect(.init(degrees: Double(current_Time.min) * 6))
+                
+                // Hour hand
+                Rectangle()
+                    .fill(Color.primary)
+                    .frame(width: 4.5, height: (width - 240) / 2)
+                    .offset(y: -(width - 240) / 4)
+                    .rotationEffect(.init(degrees: (Double(current_Time.hour) + (Double(current_Time.min) / 60)) * 30))
+                
+                // Center Circle
+                Circle()
+                    .fill(Color.primary)
+                    .frame(width: 15, height: 15)
             }
             .frame(width: width - 80, height: width - 80)
             
